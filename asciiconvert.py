@@ -1,6 +1,5 @@
 import numpy as np
 from math import sqrt
-import matplotlib.pyplot as plt
 from PIL import Image, ImageDraw, ImageFont
 
 
@@ -56,10 +55,9 @@ def replaceColor(oldC,palette):
             minDist = dist(oldC,color)
             minC = color
     return minC
-
-image = np.array(Image.open('image.png'))
+   
 def convertToAscii(image,density,h,w):
-    resgray = getAverageL(image.copy(),h,w)
+    resgray = getAverageL(image,h,w)
     res = Image.new("RGB", (w,h), (0,0,0))
     for i in range(0,w,STEP):
         for j in range(0,h,STEP):
