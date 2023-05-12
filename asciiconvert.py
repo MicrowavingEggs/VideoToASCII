@@ -9,6 +9,15 @@ density = ' .,-~:;=!*#$@'
 STEP = 10
 verdana_font = ImageFont.truetype("verdana.ttf", STEP, encoding="unic") #FONT
 
+def chunking_dot(big_matrix, small_matrix, chunk_size=100):
+    # Make a copy if the array is not already contiguous
+    small_matrix = np.ascontiguousarray(small_matrix)
+    R = np.empty((len(big_matrix), len(big_matrix[0])))
+    for i in range(0, R.shape[0], chunk_size):
+        end = i + chunk_size
+        R[i:end] = np.dot(big_matrix[i:end], small_matrix)
+    return R
+
 def getAverageL(image,w,h):
  
     """
@@ -22,7 +31,7 @@ def getAverageL(image,w,h):
 # img = img.sum(2) / (255*3) # converting to grayscale
  
     # get average
-    res = np.dot(im[...,:3], [0.2989, 0.5870, 0.1140])
+    res = chunking_dot(im[...,:3], [0.2989, 0.5870, 0.1140])
     return res
     #return im.sum(2) / (255*3)
 
